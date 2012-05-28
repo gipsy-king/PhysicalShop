@@ -1,5 +1,6 @@
 package com.wolvereness.physicalshop;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.CoalType;
@@ -7,6 +8,7 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.TreeSpecies;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Coal;
 import org.bukkit.material.Dye;
@@ -66,35 +68,60 @@ public class ShopMaterial {
 	 * @throws InvalidMaterialException if material invalid
 	 */
 	public ShopMaterial(final String string) throws InvalidMaterialException {
-		enchantment = null;
-		final String[] strings = string.split(":");
-
-		if (strings.length == 2) {
-			material = Material.matchMaterial(strings[0].trim());
-			try {
-				durability = Short.parseShort(strings[1].trim());
-			} catch (final NumberFormatException ex) {
-				throw new InvalidMaterialException();
+		if (!string.contains("#") || !string.contains("^") ) {
+			enchantment = null;
+			final String[] strings = string.split(":");
+	
+			if (strings.length == 2) {
+				material = Material.matchMaterial(strings[0].trim());
+				try {
+					durability = Short.parseShort(strings[1].trim());
+				} catch (final NumberFormatException ex) {
+					throw new InvalidMaterialException();
+				}
+				return;
 			}
-			return;
-		}
-
-		Material material = null;
-
-		for (int i = 0; i < string.length(); ++i) {
-			if ((i == 0) || (string.charAt(i) == ' ')) {
-				material = Material.matchMaterial(string.substring(i).trim());
-
-				if (material != null) {
-					this.material = material;
-					durability = parseDurability(string.substring(0, i).trim(), material);
-					return;
+	
+			Material material = null;
+	
+			for (int i = 0; i < string.length(); ++i) {
+				if ((i == 0) || (string.charAt(i) == ' ')) {
+					material = Material.matchMaterial(string.substring(i).trim());
+	
+					if (material != null) {
+						this.material = material;
+						durability = parseDurability(string.substring(0, i).trim(), material);
+						return;
+					}
 				}
 			}
+	
+			throw new InvalidMaterialException();
+		} else {
+			final String[] strings = string.split("#");
+			material = Material.getMaterial(Integer.parseInt(strings[0]));
+			
+			if (strings.length > 1) {
+				enchantment = new HashMap<Enchantment, Integer>();
+				boolean first = true;
+				for(String eString: strings) {
+					if (first) {
+						first = false;
+						continue;
+					}
+					String[] eStrings = eString.split("\\^");
+					enchantment.put(new EnchantmentWrapper(Integer.parseInt(eStrings[0])), Integer.parseInt(eStrings[1]));
+				}
+			} else {
+				enchantment = null;
+			}
+			/**
+			 * Ignore durability, so used enchanted items cannot be sold
+			 */
+			durability = 0;
 		}
-
-		throw new InvalidMaterialException();
 	}
+	
 	@Override
 	public boolean equals(final Object obj) {
 		if (this == obj) return true;
@@ -112,6 +139,12 @@ public class ShopMaterial {
 	 */
 	public short getDurability() {
 		return durability;
+	}
+	/**
+	 * @return enchantments of material
+	 */
+	public Map<Enchantment,Integer> getEnchantment() {
+		return enchantment;
 	}
 	/**
 	 * @return the bukkit material for this material
@@ -194,14 +227,32 @@ public class ShopMaterial {
 	 * @return an appropriate string representing this shop material
 	 */
 	public String toString(final MaterialConfig materialConfig) {
-		return materialConfig.isConfigured(this) ? materialConfig.toString(this) : toString();
+		if (materialConfig.isConfigured(this)) {
+			return materialConfig.toString(this);
+			
+		} else {
+			// if enchanted, returns human readable string of item and enchantments
+			return toHumanReadableString(toStringDefault(new StringBuilder(), true).toString());
+			
+		}
 	}
+	
 	/**
 	 * Adds information to
 	 * @param sb StringBuilder being used
 	 * @return the StringBuilder used
 	 */
 	public StringBuilder toStringDefault(final StringBuilder sb) {
+		return toStringDefault(sb, false);
+	}
+	
+	/**
+	 * Adds information to
+	 * @param sb StringBuilder being used
+	 * @param humanReadableEnchantment true to decode enchantment, false to encode it
+	 * @return the StringBuilder used
+	 */
+	private StringBuilder toStringDefault(final StringBuilder sb, boolean humanReadableEnchantment) {
 		switch (material) {
 		case COAL:
 			sb.append(new Coal(material, (byte) durability).getType().toString());
@@ -232,6 +283,28 @@ public class ShopMaterial {
 		case SANDSTONE:
 			sb.append(new Sandstone(material, (byte) durability).getType().toString()).append('_');
 		}
-		return sb.append(material.toString());
+		
+		if (enchantment != null && enchantment.size() > 0) {
+			if (humanReadableEnchantment) {
+				sb.append(material.toString());
+				for (Map.Entry<Enchantment, Integer> entry : enchantment.entrySet()) {
+					sb.append('+');
+				    sb.append(toHumanReadableString(entry.getKey().getName()).replace(" ", ""));
+				    sb.append('(').append(entry.getValue()).append(')');
+				}
+				return sb;
+			} else {
+				sb.append(material.getId());
+				for (Map.Entry<Enchantment, Integer> entry : enchantment.entrySet()) {
+					sb.append('#');
+				    sb.append(entry.getKey().getId());
+				    sb.append('^').append(entry.getValue());
+				}
+				return sb;
+			}
+		
+		} else {
+			return sb.append(material.toString());
+		}
 	}
 }
