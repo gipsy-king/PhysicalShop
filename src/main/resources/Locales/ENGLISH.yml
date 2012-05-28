@@ -24,3 +24,4 @@ CANT_USE: You are not allowed to use shops
 BUY_RATE: You can buy %1$d %2$s for %3$d %4$s
 CANT_RELOAD_CONFIG: You are not allowed to reload the configuration
 CONFIG_RELOADED: The configuration has been reloaded
+AUTO_FILL_BUY_STRING: Buy %1$d for %2$s

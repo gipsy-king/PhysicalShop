@@ -24,3 +24,5 @@ extended-names: false
 detailed-output: true
 update-url: http://cfapi.lukegb.com/dl/physicalshop/
 showcase-mode: true
+auto-fill-buy: true
+auto-fill-buy-item-string: [shop]
