@@ -62,7 +62,16 @@ public class ShopMaterial {
 	                    final short durability,
 	                    final Map<Enchantment,Integer> enchantment) {
 		this.material = material;
-		this.durability = durability;
+		switch(this.material) {
+		case POTION:
+			Potion potion = Potion.fromDamage((byte) durability);
+			this.durability = potion.toDamageValue();
+			break;
+		default:
+			this.durability = durability;
+			break;
+		}
+		
 		this.enchantment = enchantment == null ? null : enchantment.isEmpty() ? null : enchantment;
 	}
 	/**
@@ -92,7 +101,15 @@ public class ShopMaterial {
 	
 					if (material != null) {
 						this.material = material;
-						durability = parseDurability(string.substring(0, i).trim(), material);
+						switch(this.material) {
+						case POTION:
+							Potion potion = Potion.fromDamage((byte) Byte.parseByte(string.substring(0, i).trim()));
+							durability = potion.toDamageValue();
+							break;
+						default:
+							durability = parseDurability(string.substring(0, i).trim(), material);
+							break;
+						}
 						return;
 					}
 				}
@@ -287,9 +304,12 @@ public class ShopMaterial {
 			break;
 		case POTION:
 			if (humanReadableEnchantment) {
-				sb.append(material.toString());
+				
 				Potion potion = Potion.fromDamage((byte) durability);
-				sb.append('_').append(potion.getType().toString());
+				sb.append(potion.getType().toString());
+				
+				sb.append('_').append(material.toString());
+				
 				if (potion.getLevel() == 2) {
 					sb.append('_').append("II");
 				} else if (potion.getLevel() > 2) {
@@ -297,7 +317,7 @@ public class ShopMaterial {
 				}
 				
 				for(PotionEffect effect: potion.getEffects()) {
-					sb.append('_').append(effect.getType().getName());
+					//sb.append('_').append(effect.getType().getName());
 					int duration = (int) Math.floor(effect.getDuration() / 20);
 					if (duration > 0) {
 						sb.append('(');
