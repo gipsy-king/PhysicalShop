@@ -2,9 +2,11 @@ package com.wolvereness.physicalshop;
 
 import java.util.Map;
 
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
 
 import com.wolvereness.physicalshop.exception.InvalidExchangeException;
 
@@ -97,7 +99,7 @@ public class InventoryHelpers {
 		for (final ItemStack i : inventory.getContents()) {
 			if (	(i != null)
 					&& (i.getType() == material.getMaterial())
-					&& (i.getDurability() == material.getDurability())
+					&& durabilitiesMatch(material.getMaterial(), i.getDurability(), material.getDurability())
 					&& enchantmentsMatch(i.getEnchantments(), material.getEnchantment())) {
 				amount += i.getAmount();
 			}
@@ -141,6 +143,16 @@ public class InventoryHelpers {
 		return true;
 	}
 
+	private static boolean durabilitiesMatch(Material material,
+			short a, short b) {
+		switch(material) {
+		case POTION:
+			return Potion.fromDamage((byte) a).equals(Potion.fromDamage((byte) b));
+		default:
+			return a == b;
+		}
+	}
+
 	/**
 	 * Makes a set of shop item stacks to represent this inventory
 	 * @param inventory the inventory to consider
@@ -171,7 +183,7 @@ public class InventoryHelpers {
 
 			if (	(s == null)
 					|| (s.getType() != stack.getType())
-					|| (s.getDurability() != stack.getDurability())
+					|| !durabilitiesMatch(stack.getType(), s.getDurability(), stack.getDurability())
 					|| !enchantmentsMatch(s.getEnchantments(), new ShopMaterial(stack).getEnchantment())) {
 				continue;
 			}
