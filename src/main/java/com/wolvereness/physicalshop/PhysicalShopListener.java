@@ -204,12 +204,13 @@ public class PhysicalShopListener implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onNewShopSign(final ShopSignCreationEvent e) {
-		if(!e.isCheckExistingChest()) return;
+		// ALWAYS check for 3rd party chest-protection-plugin 
 		final Block b = e.getCause().getBlock().getRelative(DOWN);
 		if(
-				plugin.lwcCheck(b, e.getCause().getPlayer())
-				|| plugin.locketteCheck(b, e.getCause().getPlayer())) {
-			e.setCheckExistingChest(false);
+				!plugin.lwcCheck(b, e.getCause().getPlayer())
+				|| !plugin.locketteCheck(b, e.getCause().getPlayer())
+				|| !plugin.deadboltCheck(b, e.getCause().getPlayer())) {
+			e.setCheckExistingChest(true);
 		}
 	}
 	/**
@@ -298,7 +299,8 @@ public class PhysicalShopListener implements Listener {
 					e.setLine(3, truncateName(e.getPlayer().getName()));
 				}
 			}
-			plugin.getServer().getPluginManager().callEvent(event.setCheckExistingChest(plugin.getPluginConfig().isExistingChestProtected()));
+			event.setCheckExistingChest(plugin.getPluginConfig().isExistingChestProtected());
+			plugin.getServer().getPluginManager().callEvent(event);
 		}
 		if (
 				!e.isCancelled()
@@ -309,11 +311,16 @@ public class PhysicalShopListener implements Listener {
 			e.setCancelled(true);
 			return;
 		}
-		if(!e.isCancelled() && e.getLine(3).equalsIgnoreCase(plugin.getConfig().getString(SERVER_SHOP))) {
-			try {
-				plugin.getServer().getPluginManager().callEvent(new ShopCreationEvent(e, new Shop(e.getLines(), plugin)));
-			} catch (final InvalidSignException ex) {
-				plugin.getLogger().log(SEVERE, "Unexpected invalid shop", ex);
+		if(!e.isCancelled()) {
+			// create shop now if server shop, or if there is chest and was allowed by config and
+			// was not blocked by third party plugin
+			if (e.getLine(3).equalsIgnoreCase(plugin.getConfig().getString(SERVER_SHOP))
+					|| (e.getBlock().getRelative(DOWN).getType() == CHEST && !event.isCheckExistingChest())) {
+				try {
+					plugin.getServer().getPluginManager().callEvent(new ShopCreationEvent(e, new Shop(e.getLines(), plugin)));
+				} catch (final InvalidSignException ex) {
+					plugin.getLogger().log(SEVERE, "Unexpected invalid shop", ex);
+				}
 			}
 		}
 	}
