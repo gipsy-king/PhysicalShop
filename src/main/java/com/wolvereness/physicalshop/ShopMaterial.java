@@ -20,6 +20,8 @@ import org.bukkit.material.SmoothBrick;
 import org.bukkit.material.Step;
 import org.bukkit.material.Tree;
 import org.bukkit.material.Wool;
+import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffect;
 
 import com.wolvereness.physicalshop.config.MaterialConfig;
 import com.wolvereness.physicalshop.exception.InvalidMaterialException;
@@ -282,6 +284,46 @@ public class ShopMaterial {
 			break;
 		case SANDSTONE:
 			sb.append(new Sandstone(material, (byte) durability).getType().toString()).append('_');
+			break;
+		case POTION:
+			if (humanReadableEnchantment) {
+				sb.append(material.toString());
+				Potion potion = new Potion((byte) durability);
+				sb.append('_').append(potion.getType().toString());
+				if (potion.getLevel() == 2) {
+					sb.append('_').append("II");
+				} else if (potion.getLevel() > 2) {
+					sb.append('_').append(potion.getLevel());
+				}
+				
+				for(PotionEffect effect: potion.getEffects()) {
+					sb.append('_').append(effect.getType().getName());
+					int duration = (int) Math.floor(effect.getDuration() / 20);
+					if (duration > 0) {
+						sb.append('(');
+						if (duration / 60 < 10) {
+							sb.append('0');
+						}
+						sb.append((int) Math.floor(duration / 60));
+						sb.append(':');
+						if (duration % 60 < 10) {
+							sb.append('0');
+						}
+						sb.append((int) Math.floor(duration % 60));
+						sb.append(')');
+					}
+				}
+				
+				if (potion.isSplash()) {
+					sb.append('_').append("+Splash");
+				}
+				
+				return sb;
+			} else {
+				return sb.append(material.toString()).append(':').append((byte) durability);
+			}
+			
+			
 		}
 		
 		if (enchantment != null && enchantment.size() > 0) {
