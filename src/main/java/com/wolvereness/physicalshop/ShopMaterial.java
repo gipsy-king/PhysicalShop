@@ -288,7 +288,7 @@ public class ShopMaterial {
 		case POTION:
 			if (humanReadableEnchantment) {
 				sb.append(material.toString());
-				Potion potion = new Potion((byte) durability);
+				Potion potion = Potion.fromDamage((byte) durability);
 				sb.append('_').append(potion.getType().toString());
 				if (potion.getLevel() == 2) {
 					sb.append('_').append("II");
