@@ -121,10 +121,10 @@ public class InventoryHelpers {
 			return true;
 		}
 		if (a == null) {
-			return b.size() != 0;
+			return b.size() == 0;
 		}
 		if (b == null) {
-			return a.size() != 0;
+			return a.size() == 0;
 		}
 		if (a.size() != b.size()) {
 			return false;
