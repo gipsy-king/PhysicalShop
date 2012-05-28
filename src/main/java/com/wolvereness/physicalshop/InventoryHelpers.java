@@ -1,5 +1,8 @@
 package com.wolvereness.physicalshop;
 
+import java.util.Map;
+
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -95,12 +98,47 @@ public class InventoryHelpers {
 			if (	(i != null)
 					&& (i.getType() == material.getMaterial())
 					&& (i.getDurability() == material.getDurability())
-					&& i.getEnchantments().isEmpty()) {
+					&& enchantmentsMatch(i.getEnchantments(), material.getEnchantment())) {
 				amount += i.getAmount();
 			}
 		}
 
 		return amount;
+	}
+	
+	
+	/**
+	 * Check if enchantments are exactly the same. Takes level into account, and treats null
+	 * enchantment maps like zero-length maps
+	 * @param Map<Enchantment, Integer> a
+	 * @param Map<Enchantment, Integer> b
+	 * @return true if enchantments are exactly equal
+	 */
+	private static boolean enchantmentsMatch(
+			Map<Enchantment, Integer> a,
+			Map<Enchantment, Integer> b) {
+		if (a == null && b == null) {
+			return true;
+		}
+		if (a == null) {
+			return b.size() != 0;
+		}
+		if (b == null) {
+			return a.size() != 0;
+		}
+		if (a.size() != b.size()) {
+			return false;
+		}
+		for (Map.Entry<Enchantment, Integer> entry : a.entrySet()) {
+			Enchantment enchantment = entry.getKey();
+			if (!b.containsKey(enchantment)) {
+				return false;
+			}
+			if (b.get(enchantment) != entry.getValue()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -134,7 +172,7 @@ public class InventoryHelpers {
 			if (	(s == null)
 					|| (s.getType() != stack.getType())
 					|| (s.getDurability() != stack.getDurability())
-					|| (!s.getEnchantments().isEmpty())) {
+					|| !enchantmentsMatch(s.getEnchantments(), new ShopMaterial(stack).getEnchantment())) {
 				continue;
 			}
 
