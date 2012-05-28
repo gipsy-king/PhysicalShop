@@ -24,3 +24,4 @@ CANT_USE: No te encuentras habilitado para utilizar tiendas.
 BUY_RATE: Puedes comprar %1$d %2$s por %3$d %4$s
 CANT_RELOAD_CONFIG: No te encuentras habilitado para reiniciar la configuración.
 CONFIG_RELOADED: La configuración se ha reiniciado.
+AUTO_FILL_BUY_STRING: Compra %1$d x %2$s

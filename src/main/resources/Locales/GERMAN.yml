@@ -24,3 +24,4 @@ CANT_USE: Du hast keine Erlaubnis Läden zu benutzen.
 BUY_RATE: Du kannst %1$d %2$s für %3$d %4$s kaufen.
 CANT_RELOAD_CONFIG: Du hast keine Erlaubnis die Konfiguration neu zu laden.
 CONFIG_RELOADED: Die Konfiguration wurde neu geladen.
+AUTO_FILL_BUY_STRING: Kaufe %1$d für %2$s
