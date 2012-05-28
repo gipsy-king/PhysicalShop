@@ -31,7 +31,7 @@ public class MaterialConfig {
 	private final HashMap<String, ShopMaterial> currencies = new HashMap<String, ShopMaterial>();
 	private final File file;
 	private final HashMap<String, ShopMaterial> identifiers = new HashMap<String, ShopMaterial>();
-	private final Pattern junkCharacters = Pattern.compile("[^A-Za-z0-9:_]");
+	private final Pattern junkCharacters = Pattern.compile("[^A-Za-z0-9:_#\\^]");
 	private final HashMap<ShopMaterial, String> names = new HashMap<ShopMaterial, String>();
 	private final PhysicalShop plugin;
 	/**
@@ -113,6 +113,20 @@ public class MaterialConfig {
 	 */
 	public ShopMaterial getCurrency(final String currencyIdentifier) {
 		return currencies.get(currencyIdentifier);
+	}
+	/**
+	 * Get first defined currency ShopMaterial
+	 * @return ShopMaterial first currency
+	 */
+	public ShopMaterial getDefaultCurrency() {
+		return currencies.entrySet().iterator().next().getValue();
+	}
+	/**
+	 * Get first defined currency string
+	 * @return String first currency string
+	 */
+	public String getDefaultCurrencyString() {
+		return currencies.entrySet().iterator().next().getKey();
 	}
 	/**
 	 * Retrieves the material based on a name.
