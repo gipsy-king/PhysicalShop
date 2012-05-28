@@ -34,6 +34,7 @@ public class AutoFiller {
 				}
 				
 				ListIterator<ItemStack> iterator = inventory.iterator();
+				ShopMaterial material = null;
 				while(iterator.hasNext()) {
 					ItemStack stack = iterator.next();
 					if (stack == null || stack.getData().getItemType() == org.bukkit.Material.AIR
@@ -41,33 +42,21 @@ public class AutoFiller {
 						continue;
 					}
 					
-					ShopMaterial material = new ShopMaterial(stack);
-					
-					materialName = material.toString();
-					
-					
-					/*Map<Enchantment, Integer> enchantments = stack.getEnchantments();
-					if (enchantments != null && enchantments.size() > 0) {
-						String enchantmentString = null;
-						for (Map.Entry<Enchantment, Integer> entry : enchantments.entrySet()) {
-							Enchantment enchantment = entry.getKey();
-						    int level = entry.getValue();
-						    
-							if (enchantmentString == null) {
-								enchantmentString = enchantment.getId() + "^" + level;
-							} else {
-								enchantmentString += "," + enchantment.getId() + "^" + level;
-							}
+					if (material == null) {
+						material = new ShopMaterial(stack);
+						materialName = material.toString();
+						amount = stack.getAmount();
+						if (amount > 1) {
+							// is stackable, this shall be the amount
+							break;
 						}
-						e.getPlayer().sendMessage("enchantment: " + enchantmentString);
-						materialName += "#" + enchantmentString;
-					}*/
-					
-					e.getPlayer().sendMessage("material: " + materialName);
-				    
-					amount = stack.getAmount();
-					break;
+						
+					} else if (material.getMaterial().getId() == stack.getTypeId()) {
+						// is not stackable, increse the amount for each item of that type
+						amount += 1;
+					}
 				}
+				
 				
 				if (materialName != null) {
 					String line = "[" + materialName + "]";
