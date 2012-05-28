@@ -263,6 +263,14 @@ public class PhysicalShopListener implements Listener {
 	 */
 	@EventHandler(ignoreCancelled = true)
 	public void onSignChange(final SignChangeEvent e) {
+		if (plugin.getPluginConfig().isAutoFillBuy()) {
+			AutoFiller.autoFillSign(e,
+					plugin.getPluginConfig().getAutoFillBuyItemString(),
+					plugin.getLocale().getMessage(AUTO_FILL_BUY_STRING),
+					plugin.getMaterialConfig().getDefaultCurrencyString(),
+					plugin.getMaterialConfig().getDefaultCurrency().getMaterial());
+		}
+		
 		try {
 			new Shop(e.getLines(), plugin);
 		} catch (final InvalidSignOwnerException ex) {

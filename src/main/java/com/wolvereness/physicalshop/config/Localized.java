@@ -94,7 +94,12 @@ public class Localized {
 		 * Shop item amount<br>
 		 * Shop item type
 		 */
-		STATUS_ONE_MATERIAL
+		STATUS_ONE_MATERIAL,
+		/**
+		 * Shop Buy stack size<br>
+		 * Shop Price in default currency
+		 */
+		AUTO_FILL_BUY_STRING
 	}
 	/**
 	 * Regex to find the & symbols to be replaced

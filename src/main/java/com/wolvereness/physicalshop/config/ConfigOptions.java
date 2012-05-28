@@ -107,4 +107,12 @@ public class ConfigOptions {
 	 * Config option, "update-url"
 	 */
 	public static String UPDATE_URL = "update-url";
+	/**
+	 * Config option, "auto-fill-buy"
+	 */
+	public static String AUTO_FILL_BUY = "auto-fill-buy";
+	/**
+	 * Config option, "auto-fill-buy-item-string"
+	 */
+	public static String AUTO_FILL_BUY_ITEM_STRING = "[shop]";
 }

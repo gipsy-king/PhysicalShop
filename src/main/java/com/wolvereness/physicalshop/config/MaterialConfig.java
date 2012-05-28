@@ -115,6 +115,20 @@ public class MaterialConfig {
 		return currencies.get(currencyIdentifier);
 	}
 	/**
+	 * Get first defined currency ShopMaterial
+	 * @return ShopMaterial first currency
+	 */
+	public ShopMaterial getDefaultCurrency() {
+		return currencies.entrySet().iterator().next().getValue();
+	}
+	/**
+	 * Get first defined currency string
+	 * @return String first currency string
+	 */
+	public String getDefaultCurrencyString() {
+		return currencies.entrySet().iterator().next().getKey();
+	}
+	/**
 	 * Retrieves the material based on a name.
 	 * @param name Name to search / interpret
 	 * @return ShopMaterial that should be associated with the name.
