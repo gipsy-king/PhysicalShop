@@ -28,6 +28,7 @@ import com.griefcraft.lwc.LWCPlugin;
 import com.wolvereness.physicalshop.config.Localized;
 import com.wolvereness.physicalshop.config.MaterialConfig;
 import com.wolvereness.physicalshop.config.StandardConfig;
+import com.wolvereness.physicalshop.dynmap.DynmapListener;
 import com.wolvereness.physicalshop.showcase.ShowcaseListener;
 import com.wolvereness.util.CommandHandler;
 import com.wolvereness.util.CommandHandler.Reload;
@@ -39,6 +40,8 @@ import com.wolvereness.util.NameCollection;
 
 import de.diddiz.LogBlock.Consumer;
 import de.diddiz.LogBlock.LogBlock;
+
+import org.dynmap.DynmapCommonAPI;
 
 /**
  *
@@ -200,6 +203,10 @@ public class PhysicalShop extends JavaPlugin implements Verbosable {
 			temp = getServer().getPluginManager().getPlugin("Lockette");
 			if(temp != null && temp instanceof Lockette) {
 				lockette = (Lockette) temp;
+			}
+			temp = getServer().getPluginManager().getPlugin("dynmap");
+			if(temp != null && temp instanceof DynmapCommonAPI) {
+				getServer().getPluginManager().registerEvents(new DynmapListener(this, (DynmapCommonAPI) temp), this);
 			}
 			getLogger().info(getDescription().getFullName() + " enabled.");
 		} catch (final Throwable t) {

@@ -24,3 +24,9 @@ CANT_USE: You are not allowed to use shops
 BUY_RATE: You can buy %1$d %2$s for %3$d %4$s
 CANT_RELOAD_CONFIG: You are not allowed to reload the configuration
 CONFIG_RELOADED: The configuration has been reloaded
+DYNMAP_HTML_BUY: Sells <strong>%1$d</strong> for <strong>%2$d</strong> %3$s
+DYNMAP_HTML_SELL: Buys <strong>%1$d</strong> for <strong>%2$d</strong> %3$s
+DYNMAP_HTML_AVAILABLE: Has <strong>%1$d</strong> %2$s in stock
+DYNMAP_HTML_BOUGHT: Has already <strong>%1$d</strong> %2$s
+DYNMAP_HTML_PROFIT_BUY: Has <strong>%1$d</strong> %2$s awaiting redrawal
+DYNMAP_HTML_PROFIT_SELL: Can pay up to <strong>%1$d</strong> %2$s

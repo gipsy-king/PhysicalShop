@@ -24,3 +24,9 @@ CANT_USE: No te encuentras habilitado para utilizar tiendas.
 BUY_RATE: Puedes comprar %1$d %2$s por %3$d %4$s
 CANT_RELOAD_CONFIG: No te encuentras habilitado para reiniciar la configuración.
 CONFIG_RELOADED: La configuración se ha reiniciado.
+DYNMAP_HTML_BUY: Vende <strong>%1$d</strong> a <strong>%2$d</strong> %3$d
+DYNMAP_HTML_SELL: Compra <strong>%1$d</strong> a <strong>%2$d</strong> %3$d
+DYNMAP_HTML_AVAILABLE: Tiene <strong>%1$d</strong> %2$s en stock
+DYNMAP_HTML_BOUGHT: Ya ha comprado <strong>%1$d</strong> %2$s
+DYNMAP_HTML_PROFIT_BUY: Tiene <strong>%1$d</strong> %2$s pendiente de sacar
+DYNMAP_HTML_PROFIT_SELL: Puede pagar hasta <strong>%1$d</strong> %2$s
