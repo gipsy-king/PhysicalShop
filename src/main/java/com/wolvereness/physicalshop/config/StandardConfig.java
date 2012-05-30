@@ -71,7 +71,7 @@ public class StandardConfig {
 		return plugin.getConfig().getBoolean(AUTO_FILL_BUY, false);
 	}
 	public String getAutoFillBuyItemString() {
-		return plugin.getConfig().getString(AUTO_FILL_BUY_ITEM_STRING, "[auto]");
+		return plugin.getConfig().getString(AUTO_FILL_BUY_ITEM_STRING, "[shop]");
 	}
 	/**
 	 * Checks config to get the 'detailed-output' setting
