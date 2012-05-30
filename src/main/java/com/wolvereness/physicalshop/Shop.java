@@ -386,9 +386,12 @@ public class Shop {
 	 * @param plugin The active PhysicalShop plugin
 	 */
 	public void status(final Player p, final PhysicalShop plugin) {
+		p.sendMessage(getStatus(plugin));
+	}
+	
+	public String getStatus(final PhysicalShop plugin) {
 		if (canBuy() && (getShopItems() >= buyRate.getAmount())) {
-			plugin.getLocale().sendMessage(
-				p,
+			return plugin.getLocale().getMessage(
 				BUY_RATE,
 				buyRate.getAmount(),
 				material.toString(plugin.getMaterialConfig()),
@@ -398,8 +401,7 @@ public class Shop {
 		}
 
 		if (canSell() && (getShopSellCapital() >= sellRate.getPrice())) {
-			plugin.getLocale().sendMessage(
-				p,
+			return plugin.getLocale().getMessage(
 				SELL_RATE,
 				sellRate.getAmount(),
 				material.toString(plugin.getMaterialConfig()),
@@ -407,7 +409,10 @@ public class Shop {
 				getSellCurrency().toString(plugin.getMaterialConfig())
 				);
 		}
+		
+		return null;
 	}
+	
 	private void triggerRedstone(final PhysicalShop plugin) {
 		if(!plugin.getConfig().getBoolean(TRIGGER_REDSTONE)) return;
 		final BlockFace face = ShopHelpers.getBack(sign);
