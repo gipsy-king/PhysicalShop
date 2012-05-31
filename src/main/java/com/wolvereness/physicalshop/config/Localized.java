@@ -127,10 +127,11 @@ public class Localized {
 		 * Shop Buy currency type<br>
 		 */
 		DYNMAP_HTML_BOUGHT,
+		/**
 		 * Shop Buy stack size<br>
 		 * Shop Price in default currency
 		 */
-		AUTO_FILL_BUY_STRING
+		AUTO_FILL_BUY_STRING,
 	}
 	/**
 	 * Regex to find the & symbols to be replaced
