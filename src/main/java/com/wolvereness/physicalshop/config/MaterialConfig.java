@@ -31,7 +31,7 @@ public class MaterialConfig {
 	private final HashMap<String, ShopMaterial> currencies = new HashMap<String, ShopMaterial>();
 	private final File file;
 	private final HashMap<String, ShopMaterial> identifiers = new HashMap<String, ShopMaterial>();
-	private final Pattern junkCharacters = Pattern.compile("[^A-Za-z0-9:_]");
+	private final Pattern junkCharacters = Pattern.compile("[^A-Za-z0-9:_#\\^]");
 	private final HashMap<ShopMaterial, String> names = new HashMap<ShopMaterial, String>();
 	private final PhysicalShop plugin;
 	/**
