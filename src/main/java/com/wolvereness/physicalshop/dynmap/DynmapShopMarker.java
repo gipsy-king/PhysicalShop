@@ -16,8 +16,7 @@ import com.wolvereness.physicalshop.config.MaterialConfig;
 
 public class DynmapShopMarker {
 
-	private static final String MARKER_SET_NAME = "Shops";
-	private static final String MARKER_SET_ID = "PhysicalShop";
+	private static final String MARKER_SET_ID = "PhysicalShops";
 	
 	
 	private String id;
@@ -64,16 +63,16 @@ public class DynmapShopMarker {
 	 * @param iconLoader
 	 * @return true if marker added or false if marker updated
 	 */
-	public boolean save(MarkerAPI markerAPI, IconLoader iconLoader) {
+	public boolean save(MarkerAPI markerAPI, String markerSetLabel, IconLoader iconLoader) {
 		MarkerSet set = markerAPI.getMarkerSet(MARKER_SET_ID);
 		if (set == null) {
-			set = markerAPI.createMarkerSet(MARKER_SET_ID, MARKER_SET_NAME, null, true);
+			set = markerAPI.createMarkerSet(MARKER_SET_ID, markerSetLabel, null, true);
 		}
 		
 		Marker marker = set.findMarker(id);
 		if (marker == null) {
 			MarkerIcon icon;
-			InputStream stream = iconLoader.load(isBuy, isSell, owner);
+			InputStream stream = iconLoader.load(/*isBuy, isSell, owner*/);
 			if (stream == null) {
 				icon = markerAPI.getMarkerIcon("coins");
 			} else {

@@ -30,3 +30,4 @@ DYNMAP_HTML_AVAILABLE: Has <strong>%1$d</strong> %2$s in stock
 DYNMAP_HTML_BOUGHT: Has already <strong>%1$d</strong> %2$s
 DYNMAP_HTML_PROFIT_BUY: Has <strong>%1$d</strong> %2$s awaiting redrawal
 DYNMAP_HTML_PROFIT_SELL: Can pay up to <strong>%1$d</strong> %2$s
+DYNMAP_MARKER_SET_LABEL: Shops

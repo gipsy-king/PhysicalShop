@@ -126,7 +126,8 @@ public class Localized {
 		 * Buy capital<br>
 		 * Shop Buy currency type<br>
 		 */
-		DYNMAP_HTML_BOUGHT
+		DYNMAP_HTML_BOUGHT,
+		DYNMAP_MARKER_SET_LABEL
 	}
 	/**
 	 * Regex to find the & symbols to be replaced

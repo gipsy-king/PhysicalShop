@@ -10,6 +10,7 @@ import org.dynmap.markers.MarkerAPI;
 
 import com.wolvereness.physicalshop.PhysicalShop;
 import com.wolvereness.physicalshop.Shop;
+import com.wolvereness.physicalshop.config.Localized;
 import com.wolvereness.physicalshop.config.MaterialConfig;
 import com.wolvereness.physicalshop.events.ShopCreationEvent;
 import com.wolvereness.physicalshop.events.ShopDestructionEvent;
@@ -30,10 +31,9 @@ public class DynmapListener implements Listener {
 		this.dynmap = dynmap;
 		
 		this.iconLoader = new IconLoader() {
-			public InputStream load(boolean isBuy, boolean isSell, String owner) {
+			public InputStream load(/*boolean isBuy, boolean isSell, String owner*/) {
 				/**
-				 * Pop in plugin.getResource with custom icons if you feel creative
-				 * Match owner against server shop string
+				 * Pop in plugin.getResource with custom icon if you feel creative
 				 */
 				return null;
 			}
@@ -85,7 +85,8 @@ public class DynmapListener implements Listener {
 
 	private void addOrUpdateMarker(Shop shop, MaterialConfig materialConfig,
 			MarkerAPI markerAPI, IconLoader iconLoader) {
-		if (new DynmapShopMarker(shop, materialConfig, plugin.getLocale()).save(markerAPI, iconLoader)) {
+		if (new DynmapShopMarker(shop, materialConfig, plugin.getLocale()).save(markerAPI,
+				plugin.getLocale().getMessage(Localized.Message.DYNMAP_MARKER_SET_LABEL), iconLoader)) {
 			plugin.getLogger().info("marker added");
 		} else {
 			plugin.getLogger().info("marker updated");

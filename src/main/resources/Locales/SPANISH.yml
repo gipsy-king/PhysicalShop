@@ -30,3 +30,4 @@ DYNMAP_HTML_AVAILABLE: Tiene <strong>%1$d</strong> %2$s en stock
 DYNMAP_HTML_BOUGHT: Ya ha comprado <strong>%1$d</strong> %2$s
 DYNMAP_HTML_PROFIT_BUY: Tiene <strong>%1$d</strong> %2$s pendiente de sacar
 DYNMAP_HTML_PROFIT_SELL: Puede pagar hasta <strong>%1$d</strong> %2$s
+DYNMAP_MARKER_SET_LABEL: Tiendas

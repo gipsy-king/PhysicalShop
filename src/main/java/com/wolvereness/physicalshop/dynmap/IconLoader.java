@@ -4,6 +4,6 @@ import java.io.InputStream;
 
 public interface IconLoader {
 
-	InputStream load(boolean isBuy, boolean isSell, String owner);
+	InputStream load(/*boolean isBuy, boolean isSell, String owner*/);
 
 }
