@@ -91,5 +91,12 @@
 		    <scope>system</scope>
 		    <systemPath>${project.basedir}/lib/Deadbolt-2.1.jar</systemPath>
 		</dependency>
+        <dependency>
+		    <groupId>org.dynmap</groupId>
+		    <artifactId>DynmapCommonAPI</artifactId>
+		    <version>0.40</version>
+		    <scope>system</scope>
+		    <systemPath>${project.basedir}/lib/DynmapCoreAPI-0.40.jar</systemPath>
+		</dependency>
     </dependencies>
 </project>

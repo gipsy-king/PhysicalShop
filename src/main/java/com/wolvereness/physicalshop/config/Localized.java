@@ -94,7 +94,39 @@ public class Localized {
 		 * Shop item amount<br>
 		 * Shop item type
 		 */
-		STATUS_ONE_MATERIAL
+		STATUS_ONE_MATERIAL,
+		/**
+		 * Shop item amount
+		 * Shop Buy currency amount<br>
+		 * Shop Buy currency type<br>
+		 */
+		DYNMAP_HTML_BUY,
+		/**
+		 * Shop item amount
+		 * Shop Sell currency amount<br>
+		 * Shop Sell currency type<br>
+		 */
+		DYNMAP_HTML_SELL,
+		/**
+		 * Shop item amount<br>
+		 * Shop item type<br>
+		 */
+		DYNMAP_HTML_AVAILABLE,
+		/**
+		 * Buy capital<br>
+		 * Shop Buy currency type<br>
+		 */
+		DYNMAP_HTML_PROFIT_BUY,
+		/**
+		 * Sell capital<br>
+		 * Shop Sell currency type<br>
+		 */
+		DYNMAP_HTML_PROFIT_SELL,
+		/**
+		 * Buy capital<br>
+		 * Shop Buy currency type<br>
+		 */
+		DYNMAP_HTML_BOUGHT
 	}
 	/**
 	 * Regex to find the & symbols to be replaced
@@ -134,6 +166,14 @@ public class Localized {
 	public String getMessage(final Message message) {
 		final Object string = config.get(message.name());
 		return string == null ? null : colorReplace.matcher(String.valueOf(string)).replaceAll("\u00A7");
+	}
+	/**
+	 * @param message message to get
+	 * @return message stored
+	 */
+	public String getMessage(final Message message, final Object...args) {
+		final Object string = config.get(message.name());
+		return string == null ? null : colorReplace.matcher(String.format(String.valueOf(string), args)).replaceAll("\u00A7");
 	}
 	/**
 	 * Sends the recipient a formatted message located at the node defined
