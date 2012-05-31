@@ -63,6 +63,17 @@ public class StandardConfig {
 		return plugin.getConfig().getBoolean(AUTO_FILL_NAME, true);
 	}
 	/**
+	 * Checks config to get the 'auto-fill-buy' setting.
+	 * 
+	 * @return if buy item and price should be detected from chest contents
+	 */
+	public boolean isAutoFillBuy() {
+		return plugin.getConfig().getBoolean(AUTO_FILL_BUY, false);
+	}
+	public String getAutoFillBuyItemString() {
+		return plugin.getConfig().getString(AUTO_FILL_BUY_ITEM_STRING, "[shop]");
+	}
+	/**
 	 * Checks config to get the 'detailed-output' setting
 	 *
 	 * @return the config option for printing detailed chest output
